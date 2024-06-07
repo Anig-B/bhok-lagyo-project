@@ -1,0 +1,349 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Body Styles */
+body {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* Root Class for 100% Viewport Width and Height */
+.root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Navigation Styles */
+nav {
+  position: fixed;
+  width: 100%;
+  background: #141a26;
+  text-align: center;
+  z-index: 1000; /* Ensure nav stays on top */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 20px; /* Add some margin to the logo */
+}
+
+.toggle-button {
+  display: none;
+  font-size: 1.5em;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 20px; /* Add some margin to the menu items */
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+nav ul li {
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  padding: 10px; /* Add padding for clickable area */
+}
+
+nav ul li a img {
+  margin-right: 10px;
+}
+
+/* Header Styles */
+header {
+  background-image: url("src/img/component-img/landing-page-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; /* Ensure the background image doesn't repeat */
+  background-position: center; /* Center the background image */
+  color: white;
+  text-align: center;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3em;
+}
+
+header p {
+  font-size: 1.5em;
+  margin: 10px 0 20px 0;
+}
+
+header button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+header .search-container {
+  margin-top: 20px;
+}
+
+header .search-container input {
+  padding: 10px;
+  font-size: 1em;
+  width: 250px;
+  border: none;
+  border-radius: 5px;
+}
+
+header .search-container button {
+  padding: 10px;
+  font-size: 1em;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Specials Section */
+.specials {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.specials h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.specials-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.special-item {
+  margin: 20px;
+  text-align: center;
+}
+
+.special-item img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* How It Works Section */
+.how-it-works {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.how-it-works img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Featured Restaurants Section */
+.featured-restaurants {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.featured-restaurants h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.restaurant-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.restaurant-item {
+  margin: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px; /* Fixed width for consistency */
+}
+
+.restaurant-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%; /* Circular image */
+}
+
+.restaurant-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Footer Styles */
+footer {
+  width: 100%;
+  color: white;
+}
+
+footer .footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff7527;
+}
+
+footer .footer-content,
+.footer-content-white {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+footer .footer-content {
+  padding-left: 20px;
+}
+
+footer .footer-content img {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+footer .footer-content h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+footer .footer-content p,
+.footer-content-white p {
+  margin: 10px 0;
+}
+
+footer .footer-content button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+}
+
+footer .footer-content .button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+footer .contact-info,
+footer .about-info {
+  text-align: left;
+  margin: 20px;
+}
+
+footer .bottom-bar {
+  background-color: #333;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  footer .footer-content-white {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  footer .footer-content img {
+    margin-bottom: 0;
+  }
+
+  footer .contact-info,
+  footer .about-info {
+    margin: 0 20px;
+  }
+}
+
+footer .social-links {
+  text-align: center;
+}
+
+.footer-content-white {
+  color: black;
+  background: white;
+  width: 100%;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .toggle-button {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  .logo,
+  .menu {
+    margin: 0;
+  }
+}
+
+/* Responsive Header Background */
+@media (max-width: 768px) {
+  header {
+    height: 50vh;
+    background-size: cover; /* Ensure the background image covers the header area */
+  }
+
+  header h1 {
+    font-size: 2em;
+  }
+
+  header p {
+    font-size: 1em;
+  }
+
+  header .search-container input {
+    width: 200px;
+  }
+}
