@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="root">
+    <?php
+     include '../../../connection/connection.php';
+     error_reporting(0); // hide undefine index errors
+   session_start();
+    ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +14,33 @@
 </head>
 <body>
 <header>
-    <nav>
-        <div class="logo">
-            <a href="../../components/Landing/index.html"><img src="../../img/useless/logo.png" alt="Logo"></a>
-        </div>
-        <ul class="menu">
-            <li><a href="../../components/Landing/index.html">Home</a></li>
-            <li><a href="index.html">Restaurant</a></li>
-            <li><a href="#my-cart">My Cart</a></li>
-            <li><a href="../../components/login/index.html">Login</a></li>
-            <li><a href="../../components/Sign-in/index.html">SignUp</a></li>
-        </ul>
+<nav>
+      <div class="logo">
+          <img src="..\..\..\src\img\useless\logo.png" alt="Logo"/>
+      </div>
+      <div class="toggle-button" id="navbar-toggle">&#9776;</div>
+      <ul class="menu" id="navbar-links">
+        <li class="nav-item"><a href="../../../index.php">Home</a></li>
+        <li class="nav-item">
+          <a href="index.php">Restaurant</a>
+        </li>
+        
+							<?php
+						if(empty($_SESSION["user_id"])) // if user is not login
+							{
+								echo '<li class="nav-item"><a href="../login/index.php">Login</a> </li>
+							  <li class="nav-item"><a href="../Sign-in/index.php">signup</a> </li>';
+							}
+						else
+							{
+									//if user is login
+									
+									echo  '<li class="nav-item"><a href="your_orders.php" >Your Orders</a> </li>';
+									echo  '<li class="nav-item"><a href="../login/logout.php">Logout</a> </li>';
+							}
+
+						?>
+      </ul>
     </nav>
 </header>
 
@@ -57,43 +78,24 @@
 <section class="featured-restaurants" id="featured-restaurants">
     <h2>Featured Restaurants</h2>
     <div class="restaurant-grid">
+    <?php 
+     $result = mysqli_query($db, "SELECT * from restaurant" );
+    while($rows=mysqli_fetch_array($result))
+     {echo '
+   
         <div class="restaurant-item">
-            <img src="../../img/restaurant-img/byayian.jpg" alt="Byanjan Restaurant">
+  
+            <img src="data:image/jpg;base64,'.base64_encode($rows['r_img']).'" height = 100 width = 100/>
             <div class="restaurant-info">
-                <h3>Byanjan</h3>
-                <p>Lakeside, Pokhara</p>
+                <h3>'.$rows['r_name'].'</h3>
+                <p>'.$rows['r_address'].'</p>
                 <h5>✔ Min️: Rs. 299 &nbsp;🛵: 30 mins</h5>
                 <button> View menu </button>
             </div>
         </div>
-        <div class="restaurant-item">
-            <img src="../../img/restaurant-img/aroma.jpg" alt="Aroma Cafe">
-            <div class="restaurant-info">
-                <h3>Aroma Cafe</h3>
-                <p>Chiplaydhunga, Pokhara</p>
-                <h5>✔ Min️: Rs. 299 &nbsp;🛵: 30 mins</h5>
-                <button> View menu </button>
-            </div>
-        </div>
-        <div class="restaurant-item">
-            <img src="../../img/restaurant-img/utCK.jpg" alt="Anig’s Cloud Kitchen">
-            <div class="restaurant-info">
-                <h3>Anig’s Cloud Kitchen</h3>
-                <p>Ratnachowk, Pokhara</p>
-                <h5>✔ Min️ Rs. 299 &nbsp;🛵: 30 mins</h5>
-                <button> View menu </button>
-            </div>
-        </div>
-        <div class="restaurant-item">
-            <img src="../../img/restaurant-img/utCK.jpg" alt="Utsav’s Cloud Kitchen">
-            <div class="restaurant-info">
-                <h3>Utsav’s Cloud Kitchen</h3>
-                <p>Newroad, Pokhara</p>
-                <h5>✔ Min️ Rs. 299 &nbsp;🛵: 30 mins</h5>
-                <button> View menu </button>
-            </div>
-        </div>
-    </div>
+  ';}
+    ?>
+      </div>
 </section>
 <section class="top-selling-foods">
     <h2>Top selling foods</h2>
@@ -166,3 +168,13 @@
 </footer>
 </body>
 </html>
+
+<!-- <div class="restaurant-item">
+           <img src="../../img/restaurant-img/aroma.jpg" alt="Aroma Cafe">
+             <div class="restaurant-info">
+                 <h3>Aroma Cafe</h3>
+                <p>Chiplaydhunga, Pokhara</p>
+                 <h5>✔ Min️: Rs. 299 &nbsp;🛵: 30 mins</h5>
+                 <button> View menu </button>
+             </div>
+         </div> -->

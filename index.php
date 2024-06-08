@@ -1,5 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en" class="root">
+  <?php
+include("connection\connection.php");  //include connection file
+error_reporting(0);  // using to hide undefine undex errors
+session_start(); //start temp session until logout/browser closed
+?>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,31 +20,48 @@
   <body>
     <nav>
       <div class="logo">
-        <a href="src/components/login/index.html"
+        <a href="src/components/login/index.php"
           ><img src="src/img/useless/logo.png" alt="Logo"
         /></a>
       </div>
       <div class="toggle-button" id="navbar-toggle">&#9776;</div>
       <ul class="menu" id="navbar-links">
-        <li><a href="index.html">Home</a></li>
-        <li>
-          <a href="src/components/Restaurtant/index.html">Restaurant</a>
+        <li class="nav-item"><a href="index.php">Home</a></li>
+        <li class="nav-item">
+          <a href="src/components/Restaurtant/index.php">Restaurant</a>
         </li>
-        <li><a href="#my-cart">My Cart</a></li>
+        
+							<?php
+						if(empty($_SESSION["user_id"])) // if user is not login
+							{
+								echo '<li class="nav-item"><a href="src/components/login/index.php">Login</a> </li>
+							  <li class="nav-item"><a href="src/components/Sign-in/index.php">signup</a> </li>';
+							}
+						else
+							{
+									//if user is login
+									
+									echo  '<li class="nav-item"><a href="your_orders.php" >Your Orders</a> </li>';
+									echo  '<li class="nav-item"><a href="src/components/login/logout.php">Logout</a> </li>';
+							}
+
+						?>
+        <!-- <li><a href="#my-cart">My Cart</a></li>
         <li><a href="src/components/login/index.html">Login</a></li>
-        <li><a href="src/components/Sign-in/index.html">SignUp</a></li>
+        <li><a href="src/components/Sign-in/index.html">SignUp</a></li> -->
       </ul>
     </nav>
 
     <header>
       <h1>Bhok Lagyo</h1>
-      <p>Order your fav food or home cooked</p>
+      <p>"Khane haina tw?"</p>
       <button>Track My Orders</button>
       <div class="search-container">
         <input type="text" placeholder="Search Restaurant or Foods..." />
         <button>Search</button>
       </div>
     </header>
+    <!-- Special item display -->
     <section class="specials" id="specials">
       <h2>Today's Special</h2>
       <div class="specials-grid">
@@ -56,56 +79,31 @@
         </div>
       </div>
     </section>
+    <!-- how it works img -->
     <section class="how-it-works">
       <img src="src/img/component-img/how-it-works.jpg" alt="how-it-works" />
     </section>
+    <!-- featured restaurant display -->
     <section class="featured-restaurants" id="featured-restaurants">
       <h2>Featured Restaurants</h2>
       <div class="restaurant-grid">
+      <?php 
+     $result = mysqli_query($db, "SELECT * from restaurant LIMIT 3" );
+    while($rows=mysqli_fetch_array($result))
+     {echo '
+   
         <div class="restaurant-item">
-          <img src="src/img/restaurant-img/byayian.jpg" alt="Restaurant 1" />
-          <div class="restaurant-info">
-            <h3>Byanjan</h3>
-            <p>Lakeside, Pokhara</p>
-            <h5>
-              ✔ Min️: Rs. 299 &nbsp;🛵: 30 &nbsp;
-              <span style="color: red">★★★★☆</span>
-            </h5>
-          </div>
+            <img src="data:image/jpg;base64,'.base64_encode($rows['r_img']).'" height = 100 width = 100/>
+            <div class="restaurant-info">
+                <h3>'.$rows['r_name'].'</h3>
+                <p>'.$rows['r_address'].'</p>
+                <h5>✔ Min️: Rs. 299 &nbsp;🛵: 30 mins</h5>
+                <button> View menu </button>
+            </div>
         </div>
-        <div class="restaurant-item">
-          <img src="src/img/restaurant-img/aroma.jpg" alt="Restaurant 2" />
-          <div class="restaurant-info">
-            <h3>Aroma Cafe</h3>
-            <p>Chiplaydhunga, Pokhara</p>
-            <h5>
-              ✔ Min️: Rs. 299 &nbsp;🛵: 30 &nbsp;
-              <span style="color: red">★★★★☆</span>
-            </h5>
-          </div>
-        </div>
-        <div class="restaurant-item">
-          <img src="src/img/restaurant-img/utCK.jpg" alt="Restaurant 3" />
-          <div class="restaurant-info">
-            <h3>Anig’s Cloud Kitchen</h3>
-            <p>Ratnachowk, Pokhara</p>
-            <h5>
-              ✔ Min️ Rs. 299 &nbsp;🛵: 30 &nbsp;
-              <span style="color: red">★★★★☆</span>
-            </h5>
-          </div>
-        </div>
-        <div class="restaurant-item">
-          <img src="src/img/restaurant-img/utCK.jpg" alt="Restaurant 4" />
-          <div class="restaurant-info">
-            <h3>Utsav’s Cloud Kitchen</h3>
-            <p>Newroad, Pokhara</p>
-            <h5>
-              ✔ Min️ Rs. 299 &nbsp;🛵: 30 min &nbsp;
-              <span style="color: red">★★★★☆</span>
-            </h5>
-          </div>
-        </div>
+    
+    ';}
+    ?>
       </div>
     </section>
     <footer>

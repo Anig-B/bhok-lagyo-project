@@ -154,8 +154,8 @@ header .search-container button {
 
 .special-item img {
   width: 200px;
-  height: 150px;
-  object-fit: cover;
+  height: 200px;
+  object-fit: fill;
 }
 
 /* How It Works Section */
