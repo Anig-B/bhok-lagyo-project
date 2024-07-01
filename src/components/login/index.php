@@ -12,7 +12,11 @@
    include '../../../connection/connection.php';
   error_reporting(0); // hide undefine index errors
 session_start();
- //Including connection to server
+session_cache_limiter("private_no_expire");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
    
 
 
@@ -23,17 +27,30 @@ session_start();
     if(!empty($_POST))   // if records were not empty
      {
         $result = mysqli_query($db, "SELECT * from users where email ='" . $email . "' AND password='".md5($password)."' " );
+        $result2 = mysqli_query($db,"SELECT * from restaurant where r_email ='" . $email . "' AND admin_codes='".$password."'");
         $row=mysqli_fetch_array($result);
+        $row1 = mysqli_fetch_array($result2);
 	
         if(is_array($row))  // if matching records in the array & if everything is right
             {
-                    $_SESSION["user_id"] = $row['u_id']; // put user id into temp session
-                      header('location:../../../index.php'); // redirect to index.php page
+              if($row['is_verified']==1){
+                $_SESSION["user_id"] = $row['u_id']; // put user id into temp session
+                header('location:../../../index.php'); // redirect to index.php page
+              }
+              else{
+                $message = 'Email not Verified! Please check your mailbox and verify your email address.';
+               }
+                   
+            }
+            elseif (is_array($row1)){
+              $_SESSION["r_id"] = $row1['r_id'];
+              header('location: ../restaurant_dash/order.php');
             } 
         else
             {
-                      $message = "Invalid Username or Password!"; // throw error
+             $message = "Invalid Username or Password!"; // throw error
             }
+           
 }}
         ?>
     <div class="login-container">
@@ -55,7 +72,11 @@ session_start();
           <input type="email" id="email" name="email" required />
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required />
-          <input type = "checkbox" onclick="showpassword()">showpassword
+          <label for="checkbox" style=" display: inline-flex;}">
+          Show Password<input type="checkbox" id="checkbox" onclick="showpassword()"> 
+</label>
+       
+         
           <script>
 function showpassword() {
   var x = document.getElementById("password");
@@ -66,7 +87,7 @@ function showpassword() {
   }
 }
 </script>
-          <a href="../forgotPassword/index.html" class="forgot-password"
+          <a href="../forgotPassword/check_email.php" class="forgot-password"
             >Forget Password ?</a
           >
           

@@ -17,7 +17,7 @@ session_start();
 
 
     if (isset($_POST)) {
-      echo"isset";
+     
       //assigning form value to variables
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -29,7 +29,7 @@ session_start();
         if(is_array($row))  // if matching records in the array & if everything is right
             {
                     $_SESSION["admin_id"] = $row['admin_id']; // put user id into temp session
-                      header('location:dashboard\dashboard.php'); // redirect to dashboard.php page
+                      header('location:dashboard\index.php'); // redirect to dashboard.php page
             } 
         else
             {

@@ -19,57 +19,7 @@ body {
 .root {
   width: 100vw;
   height: 100vh;
-}
-
-/* Navigation Styles */
-nav {
-  position: fixed;
-  width: 100%;
-  background: #141a26;
-  text-align: center;
-  z-index: 1000; /* Ensure nav stays on top */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  margin-left: 20px; /* Add some margin to the logo */
-}
-
-.toggle-button {
-  display: none;
-  font-size: 1.5em;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-right: 20px; /* Add some margin to the menu items */
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-nav ul li {
-  margin: 0 20px;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2em;
-  display: flex;
-  align-items: center;
-  padding: 10px; /* Add padding for clickable area */
-}
-
-nav ul li a img {
-  margin-right: 10px;
+  overflow-x: hidden;
 }
 
 /* Header Styles */
@@ -153,9 +103,9 @@ header .search-container button {
 }
 
 .special-item img {
-  width: 200px;
-  height: 200px;
-  object-fit: fill;
+  max-width: 350px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
 }
 
 /* How It Works Section */
@@ -167,6 +117,7 @@ header .search-container button {
 .how-it-works img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 /* Featured Restaurants Section */
@@ -196,10 +147,9 @@ header .search-container button {
 }
 
 .restaurant-item img {
-  width: 100px;
-  height: 100px;
+  max-width: 150px;
+  aspect-ratio: 3/2;
   object-fit: cover;
-  border-radius: 50%; /* Circular image */
 }
 
 .restaurant-info {
@@ -207,125 +157,6 @@ header .search-container button {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-/* Footer Styles */
-footer {
-  width: 100%;
-  color: white;
-}
-
-footer .footer-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ff7527;
-}
-
-footer .footer-content,
-.footer-content-white {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-}
-footer .footer-content {
-  padding-left: 20px;
-}
-
-footer .footer-content img {
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 20px;
-}
-
-footer .footer-content h2 {
-  font-size: 2em;
-  margin-bottom: 10px;
-}
-
-footer .footer-content p,
-.footer-content-white p {
-  margin: 10px 0;
-}
-
-footer .footer-content button {
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
-}
-
-footer .footer-content .button-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-footer .contact-info,
-footer .about-info {
-  text-align: left;
-  margin: 20px;
-}
-
-footer .bottom-bar {
-  background-color: #333;
-  padding: 10px;
-  width: 100%;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  footer .footer-content-white {
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  footer .footer-content img {
-    margin-bottom: 0;
-  }
-
-  footer .contact-info,
-  footer .about-info {
-    margin: 0 20px;
-  }
-}
-
-footer .social-links {
-  text-align: center;
-}
-
-.footer-content-white {
-  color: black;
-  background: white;
-  width: 100%;
-}
-
-/* Responsive Navbar */
-@media (max-width: 768px) {
-  .toggle-button {
-    display: block;
-  }
-
-  nav ul {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-  }
-
-  nav ul.show {
-    display: flex;
-  }
-
-  nav ul li {
-    margin: 10px 0;
-  }
-
-  .logo,
-  .menu {
-    margin: 0;
-  }
 }
 
 /* Responsive Header Background */
@@ -345,5 +176,9 @@ footer .social-links {
 
   header .search-container input {
     width: 200px;
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
   }
 }

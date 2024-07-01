@@ -2,8 +2,11 @@
 <html lang="en">
 <?php
  include '../../../connection/connection.php';
- error_reporting(0); // hide undefine index errors
+ include '../Function/mailFunction.php';
+error_reporting(0); // hide undefine index errors
 session_start();
+
+
 if (isset($_POST))  // if records were not empty
 {
   $user_details = array($firstname = $_POST["firstname"], $lastname = $_POST['lastname'], $contact = $_POST['contact'], $email = $_POST['email'], $password = $_POST['password']);
@@ -17,38 +20,33 @@ if (isset($_POST))  // if records were not empty
 elseif($_POST['password'] != $_POST['confirm-password']){  //matching passwords
         $message = "Password do not match"."<br/>.<br/>";
  }
- elseif(strlen($_POST['password']) < 10)  //password length
+ elseif(strlen($user_details[4]) < 10)  //password length
  {
      $message = "Password must be greater or equals to 10"."<br/>.<br/>";
  }
- elseif(strlen($_POST['contact']) < 10)  //contact length
+ elseif(strlen($user_details[2]) < 10)  //contact length
  {
-     $message = "invalid phone number!"."<br/>.<br/>";
+     $message = " Invalid Phone Number!"."<br/>.<br/>";
  }
- elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) // Validate email address
+ elseif (!filter_var($user_details[3], FILTER_VALIDATE_EMAIL)) // Validate email address
  {
         $message = "Invalid email address please type a valid email!"."<br/>.<br/>";
  }
 
     else {
+      $v_code = bin2hex(random_bytes(16));
          //insertion of user_details
-        $sql = "INSERT INTO users(f_name,l_name,contact,email,password) VALUES('" . $user_details[0] . "','" . $user_details[1] . "','" . $user_details[2] . "','" . $user_details[3] . "','" . md5($user_details[4]) . "')";
-        mysqli_query($db, $sql);
-        $success = "Account Created successfully!<p>You will be redirected in <span id='counter'>5</span> second(s).</p>
-														<script type='text/javascript'>
-														function countdown() {
-															var i = document.getElementById('counter');
-															if (parseInt(i.innerHTML)<=0) {
-																location.href = '../login/index.php';
-															}
-															i.innerHTML = parseInt(i.innerHTML)-1;
-														}
-														setInterval(function(){ countdown(); },1000);
-														</script>'";
-		
+        $sql = "INSERT INTO users(f_name,l_name,contact,email,password,verification_code,is_verified) VALUES('" . $user_details[0] . "','" . $user_details[1] . "','" . $user_details[2] . "','" . $user_details[3] . "','" . md5($user_details[4]) . "','$v_code','0')";
+       $subject = 'Verify Your Email Address';
+       $body = "Thanks for Registration! Click the link to verify email address <a href = 'http://localhost/bhoklagyo/src/components/login/verify.php?email=$email&v_code=$v_code'>Click Here</a>";
+        if(mysqli_query($db, $sql) && sendMail($user_details[3],$v_code,$subject,$body)){
+        $success = "Account created successfully! Please check your Gmail to verify your email address.";
         //header to login page
-        header('refresh:5,url=../login/index.php');
-
+        }
+        else{
+          $message= 'Please provide a valid email-address';
+        
+        }
 
     }
 }?>
@@ -71,7 +69,7 @@ elseif($_POST['password'] != $_POST['confirm-password']){  //matching passwords
             />
           </a>
         </div>
-        <h1>Sign in</h1>
+        <h1>Sign Up</h1>
         <form action="" method="post">
           <div class="form-row">
             <div class="form-group">
@@ -108,9 +106,9 @@ elseif($_POST['password'] != $_POST['confirm-password']){  //matching passwords
               />
             </div>
           </div>
-					  <span style="color:red;"><?php echo $message; ?></span>
-					   <span style="color:green;"><?php echo $success; ?></span>
-          <button type="submit">Sign in</button>
+					  <span style="color:red;"><?php if(!empty($_POST)){ echo $message;} ?></span>
+					   <span style="color:green;"><?php echo $success.'</br>'; ?></span>
+          <button type="submit">Sign up</button>
         </form>
         <p>
           Already have account ?
