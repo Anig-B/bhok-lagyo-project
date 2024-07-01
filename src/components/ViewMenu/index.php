@@ -1,5 +1,8 @@
 
 <?php
+
+if(isset($_POST['add-to-cart'])){
+ 
 // Check if the cartData cookie is set
 if (isset($_COOKIE['cartData'])) {
     // Decode the JSON data stored in the cookie
@@ -22,49 +25,20 @@ if (isset($_COOKIE['cartData'])) {
     }
 } else {
      $message = "Cart is empty.";
-}
+}}
 ?>
-
+<!DOCTYPE html>
 <html lang="en" class="root">
   <?php
  include '../../../connection/connection.php';
 //  include '../../../index.php';
-//error_reporting(0); // hide undefine index errors
+error_reporting(0); // hide undefine index errors
 session_start();
 session_cache_limiter("private_no_expire");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
    ?>
-
-<?php
-// Check if the cartData cookie is set
-if (isset($_COOKIE['cartData'])) {
-    // Decode the JSON data stored in the cookie
-    $cartData = json_decode($_COOKIE['cartData'], true);
-
-    // Check for JSON decoding errors
-    if (json_last_error() === JSON_ERROR_NONE) {
-        echo "<h2>Cart Items</h2><ul>";
-        // Iterate through the cart data and display each item
-        foreach ($cartData as $item) {
-            $name = htmlspecialchars($item['name']);
-            $quantity = intval($item['quantity']);
-            $price = floatval($item['price']);
-            $total = floatval($item['total']);
-            echo "<li>$quantity x $name - Rs. $total</li>";
-        }
-        echo "</ul>";
-    } else {
-        echo "Error decoding JSON: " . json_last_error_msg();
-    }
-} else {
-    $message= "Cart is empty.";
-}
-?>
-
-
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -163,7 +137,10 @@ if (isset($_COOKIE['cartData'])) {
             <div class="description">
               '.$row['description'].'
             </div></div>';}?>
-          
+          <?php 
+          // function add_cart($item,$quantity,$price,$subtotal){
+
+          // };?>
     
         </div>
       </section>
@@ -173,13 +150,11 @@ if (isset($_COOKIE['cartData'])) {
         id="my-cart"
       >
         <h2>
-          <u
-            ><a
-              href="../Cart/index.php"
+          <u><?php echo'<a
+              href="../Cart/index.php&r_id='.$r_id.'"
               style="text-decoration: none; color: white"
-              >My Cart</a
-            ></u
-          >
+              >'?>My Cart</a
+            ></u>
         </h2>
         <ul class="cart-items" required>
           <!-- Cart items will be dynamically inserted here -->

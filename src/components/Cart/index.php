@@ -1,3 +1,32 @@
+<?php
+
+
+ 
+// Check if the cartData cookie is set
+if (isset($_COOKIE['cartData'])) {
+    // Decode the JSON data stored in the cookie
+    $cartData = json_decode($_COOKIE['cartData'], true);
+
+    // Check for JSON decoding errors
+    if (json_last_error() === JSON_ERROR_NONE) {
+        echo "<h2>Cart Items</h2><ul>";
+        // Iterate through the cart data and display each item
+        foreach ($cartData as $item) {
+            $name = htmlspecialchars($item['name']);
+            $quantity = intval($item['quantity']);
+            $price = floatval($item['price']);
+            $total = floatval($item['total']);
+            $message= "<li>$quantity x $name - Rs. $total</li>";
+        }
+        echo "</ul>";
+    } else {
+        $message= "Error decoding JSON: " . json_last_error_msg();
+    }
+} else {
+     $message = "Cart is empty.";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -63,16 +92,30 @@
             </thead>
             <tbody>
             <tr>
+                <?php 
+                if(isset($_COOKIE['cartData'])){
+                    foreach ($cartData as $item) {
+                        $name = mysqli_real_escape_string($db, $item['name']);
+                        $query = "SELECT d_image FROM dishes WHERE d_name = '$name'";
+                        $result = mysqli_query($db, $query);
+            
+                        // Assuming you are fetching and displaying the image
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '
                 <td data-label="Item">
-                    <img src="../../img/special-img/thali.jpg" alt="Thali">
-                    Thali
+                   <img src="../../../'.htmlspecialchars($row['d_image']).'" alt = "'.$row['d_name'].'"/>
+                    '.$item['name'].'
                 </td>
-                <td data-label="Quantity"><input type="number" value="1" min="1"></td>
-                <td data-label="Price">Rs. 850</td>
-                <td data-label="Subtotal">Rs. 850</td>
+                <td data-label="Quantity">'.$item['quantity'].'</td>
+                <td data-label="Price">Rs. '.$item['price'].'</td>
+                <td data-label="Subtotal">Rs. '.$item['total'].'</td>
                 <td data-label="Action"><button class="delete-item">Delete</button></td>
-            </tr>
-            <tr>
+            </tr>';}
+                            }
+                        }
+               };?>
+            <!-- <tr>
                 <td data-label="Item">
                     <img src="../../img/special-img/fastfood.jpg" alt="Burger">
                     Burger
@@ -81,7 +124,7 @@
                 <td data-label="Price">Rs. 200</td>
                 <td data-label="Subtotal">Rs. 400</td>
                 <td data-label="Action"><button class="delete-item">Delete</button></td>
-            </tr>
+            </tr> -->
             </tbody>
             <tfoot>
             <tr>
@@ -125,79 +168,7 @@
             </div>
         </div>
         </div>
-        <div class="restaurant-container" >
-           <p class="restaurant-name">Restaurant-2</p>
-        <table class="cart-table">
-            <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td data-label="Item">
-                    <img src="../../img/special-img/thali.jpg" alt="Thali">
-                    Thali
-                </td>
-                <td data-label="Quantity"><input type="number" value="1" min="1"></td>
-                <td data-label="Price">Rs. 850</td>
-                <td data-label="Subtotal">Rs. 850</td>
-                <td data-label="Action"><button class="delete-item">Delete</button></td>
-            </tr>
-            <tr>
-                <td data-label="Item">
-                    <img src="../../img/special-img/fastfood.jpg" alt="Burger">
-                    Burger
-                </td>
-                <td data-label="Quantity"><input type="number" value="2" min="1"></td>
-                <td data-label="Price">Rs. 200</td>
-                <td data-label="Subtotal">Rs. 400</td>
-                <td data-label="Action"><button class="delete-item">Delete</button></td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="3">Total</td>
-                <td id="subtotal-1">Rs. 1250</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="3">Delivery Charge</td>
-                <td id="delivery">Rs. 100</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="3">Grand Total</td>
-                <td id="total">Rs. 1350</td>
-                <td></td>
-            </tr>
-            </tfoot>
-        </table>
-
-        <div class="payment-section">
-            <label for="payment-mode">Payment mode:</label>
-            <select id="payment-mode" name="payment-mode" required="required">
-                <option>Cash On delivery</option>
-                <option>Esewa payment</option>
-            </select>
-        </div>
-
-        <div class="location-section">
-            <label for="location">Location:</label>
-            <input name="location" type="text" id="location" required="required" placeholder="Enter your delivery location"/>
-        </div>
-
-        <div class="cart-buttons">
-            <a href="../Restaurtant-View/index.html" class="continue">Continue Shopping</a>
-            <div class="button-wrapper">
-                <button class="checkout">Checkout</button>
-            </div>
-        </div>
-        </div>
+        
     </div>
 </main>
 <footer>
