@@ -102,6 +102,7 @@ if (isset($_COOKIE['cartData'])) {
                         // Assuming you are fetching and displaying the image
                         if ($result) {
                             while ($row = mysqli_fetch_assoc($result)) {
+                            $total += $item['total'];
                                 echo '
                 <td data-label="Item">
                    <img src="../../../'.htmlspecialchars($row['d_image']).'" alt = "'.$row['d_name'].'"/>
@@ -127,21 +128,25 @@ if (isset($_COOKIE['cartData'])) {
             </tr> -->
             </tbody>
             <tfoot>
+                <?php 
+                $sum = $total-$item['total'];
+                $d_charge = 100;
+                echo '
             <tr>
                 <td colspan="3">Total</td>
-                <td id="subtotal">Rs. 1250</td>
+                <td id="subtotal">Rs. '.$sum.'</td>
                 <td></td>
             </tr>
             <tr>
                 <td colspan="3">Delivery Charge</td>
-                <td id="delivery-1">Rs. 100</td>
+                <td id="delivery-1">Rs. '.$d_charge.'</td>
                 <td></td>
             </tr>
             <tr>
                 <td colspan="3">Grand Total</td>
-                <td id="total-1">Rs. 1350</td>
+                <td id="total-1">Rs. '.$sum+$d_charge.'</td>
                 <td></td>
-            </tr>
+            </tr>'?>
             </tfoot>
         </table>
 
