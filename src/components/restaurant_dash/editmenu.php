@@ -13,7 +13,7 @@ header("Pragma: no-cache");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Menu Items</title>
+    <title>Edit Menu Items</title>
     <style>
 * {
     margin: 0;
@@ -117,7 +117,7 @@ button:hover {
 </header>
 <main>
     <div class="container">
-        <h1>Add Menu Items</h1>
+        <h1>Edit Menu Items</h1>
         <form id="menuForm" >
             <label for="itemName">Item Name:</label>
             <input type="text" id="itemName" name="itemName" required>
@@ -131,7 +131,7 @@ button:hover {
             <label for="itemImage">Image:</label>
             <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
 
-            <button type="submit">Add Item</button>
+            <button type="submit">Update Item</button>
         </form>
     </div>
 </main>

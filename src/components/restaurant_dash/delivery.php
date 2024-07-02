@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="root">
 <?php
  include '../../../connection/connection.php';  //include connection file
 error_reporting(0);  // using to hide undefine undex errors
@@ -14,7 +14,8 @@ header("Pragma: no-cache");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery</title>
-<style>/* Main container styles */
+<style>
+/* Main container styles */
 * {
     margin: 0;
     padding: 0;
@@ -27,6 +28,10 @@ header("Pragma: no-cache");
     overflow-x: hidden;
 }
 
+header{
+    width: 100%;
+    height :10%
+}
 body {
     width: 100%;
     height: 100%;
@@ -51,8 +56,8 @@ main{
     display: flex;
    justify-content: center;
    flex-direction: column;
-    margin-top: 100px;
-    margin-bottom: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     align-items: center;
 }
 /* Order styles */
@@ -61,13 +66,16 @@ main{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    transition: scale 0.3s ease;
 }
-
+.order:hover{
+    scale: 1.1;
+}
 .order-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    flex-direction:column;
 }
 
 .order-header h2 {
@@ -125,67 +133,52 @@ main{
     font-weight: bold;
     text-align: right;
 }
-</style>
+.order-link {
+    font-size:25px;
+    margin-bottom: 10px;
+    color:blue;
+}
+.order-link a{
+    color:blue;
+}
+.order-link a:hover{
+    color:#FF7527;
+    cursor: pointer;
+}
 
+</style>
     <link rel="stylesheet" href="../styles/nav-styles.css">
     <link rel="stylesheet" href="../styles/footer-styles.css">
     <link rel="icon" href="../../img/component-img/foodDelivery.jpg" sizes="any">
 </head>
 <body>
 <header>
-<nav>
+    <nav>
         <div class="logo">
-          <a href="order.php">
-          <img src="..\..\..\src\img\useless\logo.png" alt="Logo"/></a>
+            <a href="../../components/login/index.html"><img src="../../img/component-img/logo.png" alt="Logo"></a>
         </div>
         <div class="toggle-button" id="navbar-toggle">&#9776;</div>
         <ul class="menu" id="navbar-links">
-          <?php
-          if(isset($_SESSION['r_id'])){
-            echo'
-          <li><a href="order.php">Orders</a></li>
+            <li><a href="order.php">Orders</a></li>
           <li><a href="menulist.php">Menu List</a></li>
-          <li><a href="delivery.php">Delivery</a></li>
-          <li><a href="#">Setting</a></li>
-          <li><a href="../login/logout.php">Signout</a></li>';}
-          else {
-            header('location: ../../../index.php');
-          };?>
+            <li><a href="delivery.php">Delivery</a></li>
+            <li><a href="restaurantsetting.php">Setting</a></li>
+            <li><a href="">Signout</a></li>
         </ul>
-      </nav>
+    </nav>
 </header>
 <main>
-   
     <div class="container">
         <h1>Today's Orders</h1>
-        <a href = 'order.php' >
-        <div class="order" id="order1">
+        <div class="order" id="order">
             <div class="order-header">
-                <h2>Order #12345</h2>  
+                <p class="order-link"><a href="orderStatus.php">Order #12345</a></p>
+                <p><strong>Total:</strong> 850.00</p>
             </div>
-        </div></a>
+        </div>
         <div class="order" id="order2">
             <div class="order-header">
-                <h2>Order #54321</h2>
-                <select class="reason-dropdown">
-                    <option value="cooking">Being cooked</option>
-                    <option value="packing">Being packed</option>
-                    <option value="off-to-delivery">Off to deliver</option>
-                    <option value="delivered">Delivered</option>
-                </select>
-            </div>
-
-            <div class="order-details">
-                <p><strong>Customer Name:</strong> Anig</p>
-                <p><strong>Contact:</strong> 09876345</p>
-                <p><strong>Delivery Location:</strong> birauta, pkr</p>
-                <p><strong>Delivery Driver Name:</strong>
-                    <select class="delivery-driver">
-                        <option value="Ram">Ram</option>
-                        <option value="Shyam">Shyam</option>
-                        <option value="Dam">Dam</option>
-                        <option value="Gam">Gam</option>
-                    </select></p>
+               <p class="order-link">  <a href="orderStatus.php">Order #54321</a></p>
                 <p><strong>Total:</strong> 650.00</p>
             </div>
         </div>
@@ -222,4 +215,5 @@ main{
 <script src="../../js/nav.script.js"></script>
 <!--logic gar ki when to cancel a mail goes telling the order is cancel for the selcted reason-->
 </body>
+
 </html>

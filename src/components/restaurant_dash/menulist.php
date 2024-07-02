@@ -120,7 +120,7 @@ body {
 <nav>
         <div class="logo">
           <a href="order.php">
-          <img src="..\..\..\src\img\useless\logo.png" alt="Logo"/></a>
+          <img src="../../img/useless/logo.png" alt="Logo"/></a>
         </div>
         <div class="toggle-button" id="navbar-toggle">&#9776;</div>
         <ul class="menu" id="navbar-links">
@@ -130,7 +130,7 @@ body {
           <li><a href="order.php">Orders</a></li>
           <li><a href="menulist.php">Menu List</a></li>
           <li><a href="delivery.php">Delivery</a></li>
-          <li><a href="#">Setting</a></li>
+            <li><a href="restaurantsetting.php">Setting</a></li>
           <li><a href="../login/logout.php">Signout</a></li>';}
           else {
             header('location: ../../../index.php');
@@ -158,7 +158,7 @@ body {
                 <td><img src="../../img/special-img/thali.jpg" alt="Thali"></td>
                 <td>
                     <button class="edit">
-                        <a href="../Edit-Menu-Item/index.html" style="color: white;text-decoration: none">Edit</a>
+                        <a href="editmenu.php" style="color: white;text-decoration: none">Edit</a>
                         </button>
                     <button class="delete">Delete</button>
                 </td>
@@ -169,7 +169,7 @@ body {
                 <td><img src="../../img/special-img/fastfood.jpg" alt="Burger"></td>
                 <td>
                     <button class="edit">
-                        <a href="../Edit-Menu-Item/index.html" style="color: white;text-decoration: none">Edit</a>
+                        <a href="editmenu.php" style="color: white;text-decoration: none">Edit</a>
                     </button>                    <button class="delete">Delete</button>
                 </td>
             </tr>

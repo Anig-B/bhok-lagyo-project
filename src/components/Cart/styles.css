@@ -91,6 +91,7 @@ main {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
+  align-items: center;
 }
 
 .cart-buttons .continue,

@@ -145,10 +145,10 @@ main{
           <?php
           if(isset($_SESSION['r_id'])){
             echo'
-          <li><a href="order.php">Orders</a></li>
+          <li><a href="../../order.php">Orders</a></li>
           <li><a href="menulist.php">Menu List</a></li>
           <li><a href="delivery.php">Delivery</a></li>
-          <li><a href="#">Setting</a></li>
+          <li><a href="restaurantsetting.php">Setting</a></li>
           <li><a href="../login/logout.php">Signout</a></li>';}
           else {
             header('location: ../../../index.php');
@@ -172,6 +172,9 @@ main{
                 <option value="changed-mind">Restaurant is closed</option>
                 <option value="delivery-delay">
                   Delivery Location too far
+                </option>
+                 <option value="none">
+                 None
                 </option>
                 <option value="other">Other</option>
               </select>
@@ -209,6 +212,9 @@ main{
                 <option value="changed-mind">Restaurant is closed</option>
                 <option value="delivery-delay">
                   Delivery Location too far
+                </option>
+                 <option value="none">
+                 None
                 </option>
                 <option value="other">Other</option>
               </select>

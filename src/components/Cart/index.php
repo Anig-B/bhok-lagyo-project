@@ -1,7 +1,4 @@
 <?php
-
-
- 
 // Check if the cartData cookie is set
 if (isset($_COOKIE['cartData'])) {
     // Decode the JSON data stored in the cookie
@@ -28,7 +25,7 @@ if (isset($_COOKIE['cartData'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class = "root">
 <?php
      include '../../../connection/connection.php';
      error_reporting(0); // hide undefine index errors
@@ -54,7 +51,7 @@ if (isset($_COOKIE['cartData'])) {
       <ul class="menu" id="navbar-links">
         <li class="nav-item"><a href="../../../index.php">Home</a></li>
         <li class="nav-item">
-          <a href="index.php">Restaurant</a>
+        <a href="../Restaurtant/index.php">Restaurant</a>
         </li>
         
 							<?php
@@ -79,7 +76,15 @@ if (isset($_COOKIE['cartData'])) {
     <div class="cart-container">
         <h1>My Cart</h1>
         <div class="restaurant-container" >
-           <p class="restaurant-name">Restaurant-1</p>
+            <?php $r_id = $_GET['r_id'];
+            if(!isset($r_id)){
+               $r_id= $_SESSION['cart_id'];
+            }
+            $sql = mysqli_query($db, "SELECT * from restaurant where r_id = $r_id");
+          $rows =mysqli_fetch_array($sql);
+            if(is_array($rows)){
+            echo' 
+           <p class="restaurant-name">'.$rows['r_name'].'</p>';}?>
         <table class="cart-table">
             <thead>
             <tr>
@@ -91,31 +96,35 @@ if (isset($_COOKIE['cartData'])) {
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <?php 
-                if(isset($_COOKIE['cartData'])){
-                    foreach ($cartData as $item) {
-                        $name = mysqli_real_escape_string($db, $item['name']);
-                        $query = "SELECT d_image FROM dishes WHERE d_name = '$name'";
-                        $result = mysqli_query($db, $query);
-            
-                        // Assuming you are fetching and displaying the image
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                            $total += $item['total'];
-                                echo '
-                <td data-label="Item">
-                   <img src="../../../'.htmlspecialchars($row['d_image']).'" alt = "'.$row['d_name'].'"/>
-                    '.$item['name'].'
-                </td>
-                <td data-label="Quantity">'.$item['quantity'].'</td>
-                <td data-label="Price">Rs. '.$item['price'].'</td>
-                <td data-label="Subtotal">Rs. '.$item['total'].'</td>
-                <td data-label="Action"><button class="delete-item">Delete</button></td>
-            </tr>';}
-                            }
-                        }
-               };?>
+            <?php 
+if (isset($_COOKIE['cartData'])) {
+    foreach ($cartData as $item) {
+        $name = mysqli_real_escape_string($db, $item['name']);
+        $query = "SELECT d_image FROM dishes WHERE d_name = '$name'";
+        $result = mysqli_query($db, $query);
+
+        // Fetching and displaying the image
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $total += $item['total'];
+                echo '
+                <tr>
+                    <td data-label="Item">
+                        <img src="../../../' . htmlspecialchars($row['d_image']) . '" alt="' . htmlspecialchars($row['d_name']) . '"/>
+                        ' . htmlspecialchars($item['name']) . '
+                    </td>
+                    <td data-label="Quantity">' . intval($item['quantity']) . '</td>
+                    <td data-label="Price">Rs. ' . floatval($item['price']) . '</td>
+                    <td data-label="Subtotal">Rs. ' . floatval($item['total']) . '</td>
+                    <td data-label="Action"><button class="delete-item" data-name="' . htmlspecialchars($item['name']) . '">Delete</button></td>
+                </tr>';
+            }
+        }
+    }
+}
+?>
+
+               
             <!-- <tr>
                 <td data-label="Item">
                     <img src="../../img/special-img/fastfood.jpg" alt="Burger">
@@ -131,6 +140,7 @@ if (isset($_COOKIE['cartData'])) {
                 <?php 
                 $sum = $total-$item['total'];
                 $d_charge = 100;
+                $grand_total = $sum+$d_charge;
                 echo '
             <tr>
                 <td colspan="3">Total</td>
@@ -144,20 +154,20 @@ if (isset($_COOKIE['cartData'])) {
             </tr>
             <tr>
                 <td colspan="3">Grand Total</td>
-                <td id="total-1">Rs. '.$sum+$d_charge.'</td>
+                <td id="total-1">Rs. '.$grand_total.'</td>
                 <td></td>
             </tr>'?>
             </tfoot>
         </table>
-
+        <form action="checkout.php" method="post">
         <div class="payment">
-            <label for="payment-mode">Payment mode:</label>
-            <select id="payment-mode-1" name="payment-mode" required="required">
-                <option>Cash On delivery</option>
-                <option>Esewa payment</option>
-            </select>
-        </div>
-
+                <label for="payment-mode">Payment mode:</label>
+                <select id="payment-mode-1" name="payment-mode" required="required">
+                    <option value="cod">Cash On Delivery</option>
+                    <option value="esewa">Esewa Payment</option>
+                </select>
+            </div>
+           
         <div class="location-section">
             <label for="location">Location:</label>
             <input name="location" type="text" id="location-1" required="required" placeholder="Enter your delivery location"/>
@@ -166,14 +176,21 @@ if (isset($_COOKIE['cartData'])) {
             <label for="order">Customise Order:</label>
             <input name="order" type="text" id="order-1"  placeholder="Enter your customization"/>
         </div>
+
+        <?php
+                $sum = $total - $item['total'];
+                $d_charge = 100;
+                $grand_total = $sum + $d_charge;
+                echo '<input type="hidden" name="grand_total" value="' . $grand_total . '">';
+                ?>
         <div class="cart-buttons">
-            <a href="../Restaurtant-View/index.html" class="continue">Continue Shopping</a>
-            <div class="button-wrapper">
-                <button class="checkout">Checkout</button>
+                <div class="button-wrapper">
+                    <button class="checkout" name="checkout">Checkout</button>
+                </div>
             </div>
+            </form>
         </div>
-        </div>
-        
+       
     </div>
 </main>
 <footer>
@@ -203,7 +220,63 @@ if (isset($_COOKIE['cartData'])) {
         <p>Powered by: UMA Team</p>
     </div>
 </footer>
-<script src="script.js"></script>
+
+<script>document.addEventListener("DOMContentLoaded", function () {
+  const deleteButtons = document.querySelectorAll(".delete-item");
+
+  // Function to get a cookie
+  function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  // Function to set a cookie
+  function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = "expires=" + date.toUTCString();
+    document.cookie =
+      name + "=" + JSON.stringify(value) + ";" + expires + ";path=/";
+  }
+
+  // Function to update the cart cookie
+  function updateCartCookie(cartData) {
+    setCookie("cartData", cartData, 1);
+  }
+
+  // Event listener for delete buttons
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const row = button.closest("tr");
+      const itemName = button.getAttribute("data-name");
+
+      // Remove the row from the table
+      row.parentNode.removeChild(row);
+
+      // Update the cart data in the cookie
+      const cartData = JSON.parse(getCookie("cartData")) || [];
+      const updatedCartData = cartData.filter((item) => item.name !== itemName);
+      updateCartCookie(updatedCartData);
+
+      // Update the displayed subtotal and total (optional)
+      let subtotal = 0;
+      updatedCartData.forEach((item) => {
+        subtotal += item.total;
+      });
+      document.getElementById("subtotal").textContent = "Rs. " + subtotal;
+      const deliveryCharge = 100; // example delivery charge
+      document.getElementById("total-1").textContent =
+        "Rs. " + (subtotal + deliveryCharge);
+    });
+  });
+});
+</script>
 <script src="../../js/script.js"></script>
 </body>
 </html>

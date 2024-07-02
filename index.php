@@ -245,7 +245,7 @@ header .search-container button {
 						else
 							{
 									//if user is login
-									
+									echo  '<li class="nav-item"><a href="src/components/Profile/index.php" >Profile</a> </li>';
 									echo  '<li class="nav-item"><a href="src/components/Cart/index.php" >My Cart</a> </li>';
 									echo  '<li class="nav-item"><a href="src/components/login/logout.php">Logout</a> </li>';
 							}

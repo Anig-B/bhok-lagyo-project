@@ -362,6 +362,8 @@ window.onload = function(){
     ';}
         else{
           $address = "../login/index.php";
+          global $res_id;
+          $res_id = $rows['r_id'];
           echo'
            <button type="submit" name="restaurant" onclick="redirectToPage(\'' . $address . '\', ' . $rows['r_id'] .')">View menu</button>
      </div>

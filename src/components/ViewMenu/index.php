@@ -2,7 +2,7 @@
 <?php
 
 if(isset($_POST['add-to-cart'])){
- 
+  
 // Check if the cartData cookie is set
 if (isset($_COOKIE['cartData'])) {
     // Decode the JSON data stored in the cookie
@@ -102,6 +102,8 @@ header("Pragma: no-cache");
                 $r_id =  $_GET['r_id'];
                 $r_id = htmlspecialchars($r_id);
               }
+              //session variable to acess cart
+              $_SESSION['cart_id']=$r_id;
               $result = mysqli_query($db, "SELECT * from restaurant WHERE r_id = $r_id" );
               while($rows=mysqli_fetch_array($result)){   
         echo ' <img src="../../../'.htmlspecialchars($rows['r_img']).'" alt = "'.$rows['r_name'].'"/>
@@ -137,11 +139,7 @@ header("Pragma: no-cache");
             <div class="description">
               '.$row['description'].'
             </div></div>';}?>
-          <?php 
-          // function add_cart($item,$quantity,$price,$subtotal){
-
-          // };?>
-    
+        
         </div>
       </section>
       <section
@@ -151,7 +149,7 @@ header("Pragma: no-cache");
       >
         <h2>
           <u><?php echo'<a
-              href="../Cart/index.php&r_id='.$r_id.'"
+              href="../Cart/index.php"
               style="text-decoration: none; color: white"
               >'?>My Cart</a
             ></u>
@@ -165,12 +163,11 @@ header("Pragma: no-cache");
           <p>Total: <span>Rs. </span><span id="total">100</span></p>
           <p><?php echo $message;?></p>
           <div style="display: flex; justify-content: flex-end">
-            <button type = 'submit' name="add-to-cart">
-              <a
-                href="../Cart/index.php"
-                style="text-decoration: none; color: white"
-                >Add to Cart</a
-              >
+          <button type="submit" name="add-to-cart">
+  <a href='../Cart/index.php?r_id=<?php echo $r_id; ?>' style="text-decoration: none; color: white">
+    Add to cart
+  </a>
+</button>
             </button>
           </div>
         </div>
