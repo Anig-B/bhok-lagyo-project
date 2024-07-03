@@ -2,7 +2,7 @@
 <html lang="en" class="root">
 <?php
  include '../../../connection/connection.php';  //include connection file
-error_reporting(0);  // using to hide undefine undex errors
+//error_reporting(0);  // using to hide undefine undex errors
 session_start(); //start temp session until logout/browser closed
 session_cache_limiter("private_no_expire");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -13,12 +13,17 @@ header("Pragma: no-cache");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery</title>
+    <title>Delivery</title>  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    
 <style>
 /* Main container styles */
 * {
     margin: 0;
     padding: 0;
+    font-family: Inria serif;
     box-sizing: border-box;
 }
 
@@ -35,7 +40,6 @@ header{
 body {
     width: 100%;
     height: 100%;
-    font-family: Arial, sans-serif;
     background-color: white;
 }
 
@@ -149,21 +153,28 @@ main{
 </style>
     <link rel="stylesheet" href="../styles/nav-styles.css">
     <link rel="stylesheet" href="../styles/footer-styles.css">
-    <link rel="icon" href="../../img/component-img/foodDelivery.jpg" sizes="any">
+    <link rel="icon" href=../../img/component-img/foodDelivery.jpg sizes="any">
 </head>
 <body>
 <header>
     <nav>
-        <div class="logo">
-            <a href="../../components/login/index.html"><img src="../../img/component-img/logo.png" alt="Logo"></a>
+    <div class="logo">
+          <a href="order.php">
+          <img src="..\..\..\src\img\useless\logo.png" alt="Logo"/></a>
         </div>
         <div class="toggle-button" id="navbar-toggle">&#9776;</div>
         <ul class="menu" id="navbar-links">
-            <li><a href="order.php">Orders</a></li>
+        <?php
+          if(isset($_SESSION['r_id'])){
+            echo'
+          <li><a href="../../order.php">Orders</a></li>
           <li><a href="menulist.php">Menu List</a></li>
-            <li><a href="delivery.php">Delivery</a></li>
-            <li><a href="restaurantsetting.php">Setting</a></li>
-            <li><a href="">Signout</a></li>
+          <li><a href="delivery.php">Delivery</a></li>
+          <li><a href="restaurantsetting.php">Setting</a></li>
+          <li><a href="../login/logout.php">Signout</a></li>';}
+          else {
+            header('location: ../../../index.php');
+          };?>
         </ul>
     </nav>
 </header>
@@ -172,16 +183,31 @@ main{
         <h1>Today's Orders</h1>
         <div class="order" id="order">
             <div class="order-header">
-                <p class="order-link"><a href="orderStatus.php">Order #12345</a></p>
-                <p><strong>Total:</strong> 850.00</p>
+                <?php
+                 $r_id = $_SESSION['r_id']; 
+                 $query = "SELECT * from orders where r_id = '$r_id'";
+                 $result = mysqli_query($db,$query);
+                
+                 while($rows=mysqli_fetch_array($result)){
+                  $o_id = $rows['o_id'];
+                  $u_id = $rows['u_id'];
+                  $query2= "SELECT * from order_details where o_id = '$o_id' && status = 1";
+                  $result2 = mysqli_query($db,$query2);
+                  while($row1=mysqli_fetch_array($result2)){
+                 
+                   
+                    $location = $row1['location'];
+                    $food_detail=$row1['food'];
+                    $food_items = explode(' ', $food_detail); 
+                    $total = $row1['total'];
+                echo '  <p class="order-link"><a href="orderStatus.php">Order # '.$o_id.'</a></p>
+                <p><strong>Total:</strong> '.$total.'</p>';
+                }
+                  }?>
+              
             </div>
         </div>
-        <div class="order" id="order2">
-            <div class="order-header">
-               <p class="order-link">  <a href="orderStatus.php">Order #54321</a></p>
-                <p><strong>Total:</strong> 650.00</p>
-            </div>
-        </div>
+      
     </div>
 </main>
 <footer>

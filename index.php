@@ -15,6 +15,9 @@ header("Pragma: no-cache");
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bhok Lagyo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel = "stylesheet" href = "src/components/styles/nav-styles.css"/>
     <link rel = "stylesheet" href="src/components/styles/footer-styles.css"/>
     <style>
@@ -23,11 +26,11 @@ header("Pragma: no-cache");
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Inria serif;
 }
 
 /* General Body Styles */
 body {
-  font-family: Arial, sans-serif;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -49,8 +52,8 @@ header {
   background-repeat: no-repeat; /* Ensure the background image doesn't repeat */
   background-position: center; /* Center the background image */
   color: white;
-  text-align: center;
   width: 100%;
+  text-align: center;
   height: 70vh;
   display: flex;
   justify-content: center;
@@ -223,7 +226,8 @@ header .search-container button {
   </head>
   <body>
     <!-- Navigation bar -->
-    <nav>
+    <nav style="width: calc(100% - 17px);
+">
       <div class="logo">
         <a href="index.php"
           ><img src="src/img/useless/logo.png" alt="Logo"

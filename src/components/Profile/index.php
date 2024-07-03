@@ -9,16 +9,18 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Profile</title>
-    <style>/* General Reset */
+    <style>
+    /* General Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Inria serif;
+
 }
 
 /* General Body Styles */
 body {
-  font-family: Arial, sans-serif;
   width: 100%;
   height: 100%;
   display: flex;
@@ -230,8 +232,10 @@ ul li {
   }
 }
 </style>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    </head>
 <body>
 <div class="profile-container">
     <div class="inner-sidebar">
@@ -285,7 +289,7 @@ echo '<h2>Edit Profile</h2>
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" value="'.htmlspecialchars($row['email']).'">
     <label for="image">Image:</label>
-    <input type="file" id="image" name="image">
+    <input type="file" id="image" name="image" value = "'.htmlspecialchars($row['u_img']).'">
     <div class="btn-container"><button type="submit" name="update" class="btn">Save</button></div>
 </form>';
 

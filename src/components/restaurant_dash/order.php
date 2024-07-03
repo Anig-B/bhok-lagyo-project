@@ -3,7 +3,7 @@
   <head>
   <?php
  include '../../../connection/connection.php';  //include connection file
-error_reporting(0);  // using to hide undefine undex errors
+//error_reporting(0);  // using to hide undefine undex errors
 session_start(); //start temp session until logout/browser closed
 session_cache_limiter("private_no_expire");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -14,13 +14,16 @@ header("Pragma: no-cache");
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="icon" href=../../img/component-img/foodDelivery.jpg sizes="any">
-
     <style>
       /* Main container styles */
 * {
     margin: 0;
     padding: 0;
+    font-family: Inria serif;
     box-sizing: border-box;
 }
 
@@ -33,7 +36,6 @@ header("Pragma: no-cache");
 body {
     width: 100%;
     height: 100%;
-    font-family: Arial, sans-serif;
     background-color: white;
 }
 
@@ -157,88 +159,83 @@ main{
       </nav>
     </header>
     <main>
-      <div class="container">
-        <h1>Orders History</h1>
-
-        <div class="order" id="order1">
-          <div class="order-header">
-            <h2>Order #12345</h2>
+      
+     
+    <div class="container">
+    <h1>Orders List</h1>
+          <?php 
+          $r_id = $_SESSION['r_id']; 
+            $query = "SELECT * from orders where r_id = '$r_id'";
+            $result = mysqli_query($db,$query);
+           
+          
+            while($rows=mysqli_fetch_array($result)){
+                $o_id = $rows['o_id'];
+                $u_id = $rows['u_id'];
+                $query2= "SELECT * from order_details where o_id = '$o_id'";
+                $result2 = mysqli_query($db,$query2);
+                while($row1=mysqli_fetch_array($result2)){
+               
+                $location = $row1['location'];
+                $food_detail=$row1['food'];
+                $food_items = explode(' ', $food_detail); 
+                $total = $row1['total'];
+                $query3 ="SELECT * from users where u_id = '$u_id'";
+                $result3 = mysqli_query($db,$query3);
+                while($row2=mysqli_fetch_array($result3)){
+                    $u_name = $row2['f_name'];
+                    $contact = $row2['contact'];
+echo' 
+<div class="order" id="order1">
+<div class="order-header">
+            <h2>Order #'.$o_id.'</h2>
             <!--confirm-button-->
             <div style="display: flex; flex-direction: column; gap: 10px">
-              <button class="confirm-button">Confirm Order</button>
-              <button class="cancel-button">Cancel Order</button>
-              <select class="reason-dropdown">
-                <option value="item-not-available">Item Not Available</option>
-                <option value="changed-mind">Restaurant is closed</option>
-                <option value="delivery-delay">
-                  Delivery Location too far
-                </option>
-                 <option value="none">
-                 None
-                </option>
-                <option value="other">Other</option>
-              </select>
+              <form method="post" action="">
+                        <input type="hidden" name="order_id" value="'.$o_id.'">
+                        <button type="submit" class="confirm-button" name="confirm">Confirm Order</button>
+                      </form>
+              <button class="cancel-button" name="cancel">Cancel Order</button>
             </div>
           </div>
 
           <div class="order-details">
-            <p><strong>Customer Name:</strong> Megha</p>
-            <p><strong>Contact:</strong> 09876345</p>
-            <p><strong>Delivery Location:</strong> lakeside, pkr</p>
-          </div>
+            <p><strong>Customer Name:</strong> '.$u_name.'</p>
+            <p><strong>Contact:</strong>'.$contact.'</p>
+            <p><strong>Delivery Location:</strong> '.$location.'</p>
+          </div>';
+          foreach ($food_items as $item) {
+        
+          echo '
           <ul class="order-items">
             <li class="order-item">
-              <span>1 x Burger</span>
-              <span>300.00</span>
-            </li>
-            <li class="order-item">
-              <span>2 x Pizza</span>
-              <span>420.00</span>
-            </li>
-          </ul>
+              <span>'.htmlspecialchars($item) . "<br>".'</span>
+            </li>';};
+    echo'
           <div class="order-total">
-            <p><strong>Total:</strong> 720.00</p>
+            <p><strong>Total:</strong>'.$total.'</p>
           </div>
-        </div>
+        </div>';
+      
+      ;}}}
+        
+        ?>
 
-        <div class="order" id="order2">
-          <div class="order-header">
-            <h2>Order #54321</h2>
-            <div style="display: flex; flex-direction: column; gap: 10px">
-              <button class="confirm-button">Confirm Order</button>
-              <button class="cancel-button">Cancel Order</button>
-              <select class="reason-dropdown">
-                <option value="item-not-available">Item Not Available</option>
-                <option value="changed-mind">Restaurant is closed</option>
-                <option value="delivery-delay">
-                  Delivery Location too far
-                </option>
-                 <option value="none">
-                 None
-                </option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="order-details">
-            <p><strong>Customer Name:</strong> Anig</p>
-            <p><strong>Contact:</strong> 09876345</p>
-            <p><strong>Delivery Location:</strong> birauta, pkr</p>
-          </div>
-          <ul class="order-items">
-            <li class="order-item">
-              <span>3 x Salad</span>
-              <span>450.00</span>
-            </li>
-            <li class="order-item">
-              <span>1 x Sandwich</span>
-              <span>200.00</span>
-            </li>
-          </ul>
-          <div class="order-total">
-            <p><strong>Total:</strong> 650.00</p>
-          </div>
-        </div>
+<?php
+if(isset($_POST['confirm'])){
+    $order_id = $_POST['order_id'];
+    $update_query = "UPDATE order_details SET status = 1 WHERE o_id = ?";
+    $stmt = $db->prepare($update_query);
+    $stmt->bind_param('i', $order_id);
+    $stmt->execute();
+    if($stmt->affected_rows > 0){
+        echo "<script>alert('Order confirmed successfully');</script>";
+    } else {
+        echo "<script>alert('Failed to confirm order');</script>";
+    }
+    $stmt->close();
+}
+?>
       </div>
     </main>
     <footer>

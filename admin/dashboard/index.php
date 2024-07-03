@@ -13,6 +13,9 @@ session_cache_limiter("private_no_expire")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- <link rel="stylesheet" href="styles.css" /> -->
     <link rel="icon" href=..\..\src\img\component-img\foodDelivery.jpg sizes="any">
@@ -31,7 +34,7 @@ session_cache_limiter("private_no_expire")
         <ul class="sidebar-menu">
             <li><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> &nbsp Dashboard</a></li>
             <li><a href="#orders"><i class="fas fa-box"></i> &nbsp Order</a></li>
-            <li><a href="#products"><i class="fas fa-hamburger"> </i> &nbsp Product</a></li>
+            <!-- <li><a href="#products"><i class="fas fa-hamburger"> </i> &nbsp Product</a></li> -->
             <li><a href="#users"><i class="fas fa-users"></i> &nbsp User</a></li>
             <li><a href='#restaurants'><i class="fas fa-utensils"></i>&nbsp Restaurant</a></li>
             <li><a href="..\index.php"><i class="fas fa-cog"></i> &nbsp Logout</a></li>
@@ -77,59 +80,31 @@ session_cache_limiter("private_no_expire")
                 <tr>
                     <th>Order ID</th>
                     <th>Customer</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Status</th>
+                    <th>Order Details</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>01</td>
-                    <td>Megha Gurung</td>
-                    <td>Burger</td>
-                    <td>2</td>
-                    <td>400</td>
-                    <td>Delivered</td>
-                </tr>
-                <tr>
-                    <td>02</td>
-                    <td>Utsav Dhungana</td>
-                    <td>Thali</td>
-                    <td>1</td>
-                    <td>850</td>
-                    <td>In Progress</td>
-                </tr>
+                    <?php
+                    $sql = mysqli_query($db,"SELECT * from orders");
+                    while($rows=mysqli_fetch_array($sql)){
+                       $u_id =$rows['u_id'];
+                       $o_id = $rows['o_id'];
+                        $result = mysqli_query($db, "SELECT * from users where u_id =$u_id " );
+                        $result2 = mysqli_query($db, "SELECT * from order_details where o_id =$o_id " );
+                        while($row=mysqli_fetch_array($result)){
+                            while($row2=mysqli_fetch_array($result2)){
+                        echo'
+                        <tr>
+                            <td>'.$rows['o_id'].'</td>
+                            <td>'.$row['f_name'].'</td>
+                            <td>'.$row2['food'].'</td>
+                        </tr>';
+                  }  }}?>
+                   
                 </tbody>
             </table>
         </section>
-        <section id="products">
-            <h1><u>Products</u></h1>
-            <table>
-                <thead>
-                <tr>
-                    <th>Product ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Stock Limit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>2001</td>
-                    <td>Burger</td>
-                    <td>200</td>
-                    <td>50</td>
-                </tr>
-                <tr>
-                    <td>2002</td>
-                    <td>Pizza</td>
-                    <td>800</td>
-                    <td>20</td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
+       
 
          <section id="users">            <!--  User details view section -->
             <h1><u>Users</u></h1>

@@ -13,28 +13,27 @@ $grand_total = $_SESSION['grand_total'];
 $sql = "INSERT INTO orders VALUES ('$o_id','$r_id','$u_id')";
 mysqli_query($db, $sql);
 
-// Check if the cartData cookie is set
-if (isset($_COOKIE['cartData'])) {
-    // Decode the JSON data stored in the cookie
-    $cartData = json_decode($_COOKIE['cartData'], true);
+    // Check if the cartData cookie is set
+    if (isset($_COOKIE['cartData'])) {
+        // Decode the JSON data stored in the cookie
+        $cartData = json_decode($_COOKIE['cartData'], true);
 
-    // Check for JSON decoding errors
-    if (json_last_error() === JSON_ERROR_NONE) {
+        // Check for JSON decoding errors
+        if (json_last_error() === JSON_ERROR_NONE) {
         $cartArray = []; // Initialize an array to store cart data
 
-        // Iterate through the cart data and display each item
-        foreach ($cartData as $item) {
-            $name = htmlspecialchars($item['name']);
-            $quantity = intval($item['quantity']);
-            $price = floatval($item['price']);
-            $total = floatval($item['total']);
-            $food_detail .= $quantity . '*' . $name . '=' . $total . "\n";
-        }
+            // Iterate through the cart data and display each item
+            foreach ($cartData as $item) {
+                $name = htmlspecialchars($item['name']);
+                $quantity = intval($item['quantity']);
+                $price = floatval($item['price']);
+                $total = floatval($item['total']);
+                $food_detail .= $quantity . '*' . $name . '=' . $total . "\n";
+            }
     }
-    mysqli_query($db ,"INSERT INTO order_details VALUES ('$o_id','$location','$order','$grand_total','$food_detail')");
+    mysqli_query($db ,"INSERT INTO order_details VALUES ('$o_id','$location','$order','$grand_total','$food_detail','0')");
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +76,7 @@ if (isset($_COOKIE['cartData'])) {
         <p>Your action was completed successfully.</p>
         <p>Redirecting to the landing page in 3 seconds...</p>
     </div>
- 
+
     <script>
         setTimeout(function() {
             window.location.href = '../../../index.php'; 

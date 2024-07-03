@@ -14,15 +14,19 @@ header("Pragma: no-cache");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Menu Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <style>
      * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Inria serif;
+
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
@@ -113,7 +117,7 @@ body {
 </style>
     <link rel="stylesheet" href="../styles/nav-styles.css">
     <link rel="stylesheet" href="../styles/footer-styles.css">
-    <link rel="icon" href="../../img/component-img/foodDelivery.jpg" sizes="any">
+    <link rel="icon" href=../../img/component-img/foodDelivery.jpg sizes="any">
 </head>
 <body>
 <header>
@@ -152,28 +156,28 @@ body {
             </tr>
             </thead>
             <tbody id="menu-items">
+            <?php 
+            $r_id = $_SESSION['r_id'];
+            $sql = "SELECT * FROM dishes where r_id = '$r_id'";
+            $sql2 = "DELETE from dishes where r_id = '$r_id'";
+            $result = mysqli_query($db,$sql);
+            while($rows=mysqli_fetch_array($result)){
+                $c +=1;
+                echo '
             <tr>
-                <td><div contenteditable>Thali</div></td>
-                <td>Rs. 850</td>
-                <td><img src="../../img/special-img/thali.jpg" alt="Thali"></td>
+                <td><div>'.$c.'.'.$rows['d_name'].'</div></td>
+               <td>Rs. '.$rows['d_price'].'</td>
+                <td><img src="../../../'.htmlspecialchars($rows['d_image']).'" alt="'.$rows['d_name'].'"></td>
                 <td>
                     <button class="edit">
-                        <a href="editmenu.php" style="color: white;text-decoration: none">Edit</a>
+                        <a href="editmenu.php?c='.urlencode($rows['d_name']).'" style="color: white;text-decoration: none">Edit</a>
                         </button>
-                    <button class="delete">Delete</button>
                 </td>
             </tr>
-            <tr>
-                <td>Burger</td>
-                <td>Rs. 200</td>
-                <td><img src="../../img/special-img/fastfood.jpg" alt="Burger"></td>
-                <td>
-                    <button class="edit">
-                        <a href="editmenu.php" style="color: white;text-decoration: none">Edit</a>
-                    </button>                    <button class="delete">Delete</button>
-                </td>
-            </tr>
-            </tbody>
+            ';
+            };
+            ?>
+           </tbody>
         </table>
         <div class="button-container" >
         <button class="add-item-button">

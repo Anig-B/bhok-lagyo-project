@@ -1,10 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="root">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+   <!-- <link rel="stylesheet" href= "styles.css">  -->
+    <style>
+      
+* {
+margin: 0;
+padding: 0;  
+font-family: Inria serif;
+box-sizing: border-box;
+}
+
+body {
+background-color: #1a1a2e;
+}
+
+.login-container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #121824;
+}
+
+.login-form {
+background-color: rgba(255, 255, 255, 0.9);
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+max-width: 400px;
+width: 100%;
+text-align: center;
+}
+
+.login-form .logo {
+max-width: 100px;
+margin-bottom: 20px;
+}
+
+.login-form h1 {
+margin-bottom: 20px;
+color: #333;
+}
+
+.login-form label {
+display: block;
+text-align: left;
+margin-bottom: 5px;
+color: #333;
+}
+
+.login-form input {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;
+border: 1px solid #ddd;
+border-radius: 5px;
+}
+
+.login-form .forgot-password {
+display: block;
+margin-bottom: 20px;
+color: #0066cc;
+text-decoration: none;
+}
+
+.login-form button {
+background-color: #0000ff;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+}
+
+.login-form button:hover {
+background-color: #0000cc;
+}
+
+.login-form p {
+margin-top: 20px;
+color: #333;
+}
+
+.login-form .signup-link {
+color: #00ff00;
+text-decoration: none;
+font-weight: bold;
+}
+
+.login-form .signup-link:hover {
+text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+.login-container {
+background-image: none;
+}
+}
+
+
+    </style>
     <link
       rel="icon"
       href="../../img/component-img/foodDelivery.jpg"

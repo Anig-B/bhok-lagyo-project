@@ -10,9 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
     <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/nav-styles.css">
     <link rel="stylesheet" href="../styles/footer-styles.css">
-   <style>
+    <style>
     * {
     margin: 0;
     padding: 0;
@@ -28,7 +31,7 @@
 body {
     width: 100%;
     height: 100%;
-    font-family: Arial, sans-serif;
+    font-family: Inria serif;
     background-color: white;
 }
 
@@ -266,7 +269,8 @@ body {
 							{
 									//if user is login
 									
-									echo  '<li class = "nav-item"><a href="../Cart/index.php">My Cart</a></li>';
+                                    echo  '<li class="nav-item"><a href="../Profile/index.php" >Profile</a> </li>';
+                                    echo  '<li class="nav-item"><a href="../Cart/index.php" >My Cart</a> </li>';
 									echo  '<li class="nav-item"><a href="../login/logout.php">Logout</a> </li>';
 							}
 

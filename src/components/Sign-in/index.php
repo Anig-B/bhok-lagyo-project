@@ -54,8 +54,111 @@ elseif($_POST['password'] != $_POST['confirm-password']){  //matching passwords
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign-in</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href=../../img/component-img/foodDelivery.jpg sizes="any">
+    <style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inria serif;
+}
+
+body {
+  background-color: #1a1a2e;
+}
+
+.sign-in-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #121824;
+  padding: 20px; /* Space at the top and bottom */
+}
+
+.sign-in-form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.sign-in-form .logo {
+  max-width: 100px;
+  margin-bottom: 20px;
+}
+
+.sign-in-form h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.sign-in-form .form-row {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.sign-in-form .form-group {
+  text-align: left;
+}
+
+.sign-in-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.sign-in-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.sign-in-form .forgot-password {
+  display: block;
+  margin-bottom: 20px;
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.sign-in-form button {
+  background-color: #0000ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.sign-in-form button:hover {
+  background-color: #0000cc;
+}
+
+.sign-in-form p {
+  margin-top: 20px;
+  color: #333;
+}
+
+.sign-in-form .signup-link {
+  color: #00ff00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sign-in-form .signup-link:hover {
+  text-decoration: underline;
+}
+</style>
   </head>
   <body>
     <div class="sign-in-container">
